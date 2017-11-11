@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+
+{% block title_name %}
+
+    {{ title }}
+
+
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">
+            {% block navbar %}
+
+                {% include 'navbar.html' %}
+            {% endblock %}
+
+            <div class="col-sm-9 col-md-10 col-lg-10">
+
+
+                <div class="row" id="search">
+                    {#                    <div class="col-md-3  col-sm-4  pull-left">#}
+                    <div class=" col col-lg-12 col-sm-8 ">
+                        <form action="{% url 'search' %}">
+                            <input type="text" placeholder="Search ...  " title="keyword, category"
+                                   data-placement="auto"
+                                   name="search" id="searchtext"/>
+                            <button type="submit" id="submitsearch"><span class="glyphicon glyphicon-search"/></button>
+                        </form>
+                    </div>
+                </div>
+
+                <ul class="breadcrumb" style=" width: max-content; padding: 2px;">
+                    You are here :-
+                    <li><a href="{% url "dashboard" %}">Home</a></li>
+
+                    <li class="active">Trash</li>
+                </ul>
+                {##}
+                {#                <div style="font-size: large ; background: aliceblue ; width: max-content; padding: 2px;">#}
+                {##}
+                {##}
+                {#                    <span>   You are here :-  <u><a href="{% url "dashboard" %}">Home</a></u></span> / <span#}
+                {#                        class="disabled  active">  Trash</span>#}
+                {#                </div>#}
+                <div style=" margin-top:30px; ">
+
+                    {% if allUrl %}
+
+
+                        <span> <a href="{% url "trashedbin_empty" %}">Empty Trash</a></span>
+                        </div>
+
+
+                        <table class=" table  table-condensed " style="border: none;">
+
+
+                            {% for u in allUrl %}
+                                <tr id="restore">
+                                    <td style="width: 100%;">
+
+
+                                        {% if "http" in u.url %}
+                                            <div class=" col col-md-8 col-sm-7">
+                                                <p>
+
+                                                <div class="col col-md-1 col-sm-1">
+
+                                                    <input class="" type="checkbox" name="select"
+                                                           id="{{ u.user_hash }}"/>
+
+                                                </div>
+
+
+                                                <a href="{{ u.url }}" style="font-size: 16px;">
+
+                                                    {% if u.title != "Not-Defined" %}
+                                                        {{ u.title }}
+
+                                                    {% else %}
+                                                        {{ u.url|truncatechars:"60" }}
+
+                                                    {% endif %}
+
+                                                </a>
+                                                </p>
+                                            </div>
+
+
+                                        {% else %}
+
+
+
+                                            <div class=" col col-md-8 col-sm-3">
+
+
+                                                <p>
+                                                <div class="col col-md-1 col-sm-1">
+                                                    <input class="" type="checkbox" name="select"
+                                                           id="{{ u.user_hash }}"/>
+                                                </div>
+
+                                                <a href="{{ u.url }}">
+
+
+                                                    {% if u.title != "Not-Defined" %}
+                                                        {{ u.title }}
+
+                                                    {% else %}
+                                                        {{ u.url|truncatechars:"50" }}
+
+                                                    {% endif %}
+
+                                                </a></p>
+                                            </div>
+
+
+
+                                        {% endif %}
+
+
+
+                                        <div class="col col-md-2 col-sm-2" id="restore_hash">
+                                            <h6>
+
+                                                <a href=" {{ request.user.get_host }} {% url "trashedbin_command" u.user_hash %}"
+                                                   class="text-center">Restore </a> |
+                                                <a href=" {{ request.user.get_host }} {% url "trashedbin_delete" u.user_hash %}"
+                                                   class="text-center">Delete </a>
+
+
+                                            </h6>
+
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+
+                            </tbody>
+
+
+                        </table>
+                    {% else %}
+
+                        <div class=" alert alert-info text-center" style="color: black;">No Items ...</div>
+                    {% endif %}
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    </div>
+
+
+    <style>
+
+
+        #logo {
+
+            color: green;
+            font-family: 'Kaushan Script', cursive;
+            font-size: 2.5rem;
+        }
+
+        #logo:hover {
+            color: black;
+        }
+
+        #search {
+
+            margin-top: 10px;
+            background: #fff;
+        }
+
+        #searchtext, #searchtext :focus, #url, #url:hover, #url:focus {
+
+            padding: 5px;
+            border-bottom: 1px solid #333;
+            border-left: 0px solid #333;
+            border-right: 0px solid #333;
+            border-top: 0px solid #333;
+            border-radius: 0px;
+            height: 30px;
+
+            font-size: 1.2em;
+            box-shadow: none;
+            color: black;
+            width: 60%;
+
+        }
+
+        #submitsearch {
+            padding: 5px;
+            background: #00bcd4;
+            border: 0px solid #607d8b;
+            color: white;
+            height: 30px;
+            width: 75px;
+        }
+
+        title {
+
+            color: yellow;
+            background: blue;
+
+        }
+
+        #foot {
+
+            color: black;
+            font-family: 'Montserrat', cursive;
+            font-size: 1.2rem;
+
+        }
+
+        #save {
+            padding: 0px;
+            background: #00bcd4;
+            border: 0px solid #607d8b;
+            color: white;
+            height: 30px;
+            width: 75px;
+            font-size: medium;
+        }
+
+        #save:hover, #submitsearch:active {
+            background: black;
+        }
+
+        a:hover {
+
+            text-decoration: none;
+            color: black;
+            text-decoration-style: solid;
+        }
+
+
+    </style>
+
+
+
+
+    <script>
+
+        $(document).ready(function () {
+            $('#tool').tooltip();
+            $('#searchtext').tooltip();
+            $('#url').tooltip();
+
+
+        });
+
+
+    </script>
+
+
+
+
+{% endblock %}

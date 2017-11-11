@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title_name %}
+
+    {{ title }}
+
+
+{% endblock %}
+
+
+{% block body %}
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12    col-lg-12 col-md-6">
+                <div class="container-fluid">
+                    <div class="row" style="margin-top:130px; margin-left: 10px;">
+                        <div class="col-md-3 col-md-offset-4">
+
+                            <form method="POST" action="{% url 'register' %}" accept-charset="UTF-8"
+                                  role="form" class="form-signin center ">
+                                {% csrf_token %}
+                                <h2 style="text-align:center"><a href="{% url 'index' %}"><p class="text-center"
+                                                                                             id="logo"><strong>
+
+                                    pinmyblogs.com</strong></p>
+                                </a>
+                                </h2>
+
+
+                                <hr class="hr_line">
+
+
+                                {% if error == True %}
+
+
+                                    <div class="alert alert-danger alert-dismissable fade in">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        {% for key, value in errorlist.items %}
+                                            <strong> {{ key |title }} </strong>   {{ value }}
+                                        {% endfor %}
+
+                                    </div>
+
+
+                                {% endif %}
+                                <h3 class="text-center"> Register</h3>
+
+
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-edit"
+                                                                         style="color:#000"> </span></div>
+                                    <input class="form-control middle" placeholder="Pick a username"
+                                           name="username"
+                                           type="text" style="border-radius: 0px;" required>
+
+                                </div>
+
+                                <div style="margin-top: 10px;">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"
+                                                                         style="color:#000"></span></div>
+                                    <input class="form-control middle" placeholder="E-mail" required name="email"
+                                           type="text"
+                                           style="border-radius: 0px;">
+
+                                </div>
+
+                                <div style="margin-top: 10px;">
+                                </div>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-asterisk"
+                                                                         style="color:#000"></span></div>
+                                    <input class="form-control middle" placeholder="Password" required name="password"
+                                           type="password" style="border-radius: 0px;">
+
+                                </div>
+
+                                <div style="margin-top: 10px;">
+                                </div>
+
+
+                                <p class="pull-left" style="font-size: 10px;  margin-top: 5px;"><b> Use at least 1
+                                    letter, 1 digit and 6 characters.</b></p>
+
+
+                                <input class="btn btn-lg btn-info btn-block"
+                                       style="" name="reg"
+                                       type="submit" value="REGISTER">
+                                <p class="text-center" style="margin-top:10px;"><strong>OR</strong></p>
+
+
+                                <p class="text-center"><a href="{% url 'login' %}" style=" color:black;"
+                                                          class="btn btn-link"><b>Already have an account?</b></a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+    {% include 'footer.html' %}
+
+
+{% endblock %}

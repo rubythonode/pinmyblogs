@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block title_name %}
+    {{ title }}
+{% endblock %}
+{% block body %}
+
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+
+
+            {% block navbar %}
+
+                {% include "navbar.html" %}
+            {% endblock %}
+
+
+
+
+
+
+
+            <div class="col-sm-9 col-md-10 col-lg-10" style="margin-top: 10px;">
+
+
+                <div class="col-sm-12 col-md-12 col-lg-12">
+
+
+                    <div class="row" id="search">
+                        {#                    <div class="col-md-3  col-sm-4  pull-left">#}
+                        <div class=" col col-lg-12 col-sm-8 ">
+                            <form action="{% url 'search' %}">
+                                <input type="text" placeholder="Search ...  " title="keyword, category"
+                                       data-placement="auto"
+                                       name="search" id="searchtext" value="{{ request.GET.search }}" autofocus/>
+                                <button type="submit" id="submitsearch"><span class="glyphicon glyphicon-search"/>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <ul class="breadcrumb" style=" width: max-content; padding: 2px; background:white">
+                        You are here :-
+                        <li><a href="{% url "dashboard" %}">Home</a></li>
+
+                        <li class="active" style="color:black">Archive</li>
+                    </ul>
+
+                    {% if  count is None %}
+                        <div class="alert alert-success bg-success text-center">
+                            <h4> No Restuls<a href="{% url 'dashboard' %}"
+                                              style="color:black; background: whitesmoke"> Go Back to Home</a>
+                            </h4></div>
+
+
+                    {% else %}
+
+
+                        <h2> Archived ({{ count }})
+                        </h2>
+                        <hr class="hr">
+
+                        {% for qq in q %}
+                            <div class="col col-lg-12">
+                                <p>
+                                    <a href="{{ qq.url }}">   {{ qq.url|truncatechars:100 }}</a></p>
+
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <style>
+        #save, #save:hover, #save > button:active {
+
+            width: 100px;
+            border-radius: 0px;
+            hight: 50px;
+
+            font-size: 1.5em;
+
+        }
+
+        .checkbox {
+
+            margin: 10px;
+        }
+
+    </style>
+
+
+{% endblock %}

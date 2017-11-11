@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+    <title>pinmyblogs|start :)</title>
+
+
+    {% load static %}
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Kaushan+Script'/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    {#    <link rel="icon" href="" type="image/x-icon"/>#}
+
+
+    <style>
+
+        body {
+            text-align: center;
+            color: black;
+            font-family: 'Kaushan Script', cursive;
+            font-size: 2.5rem;
+
+        }
+
+        #strong {
+            color: blue;
+        }
+
+        #logo {
+
+            text-align: center;
+            color: green;
+            font-family: 'Kaushan Script', cursive;
+            font-size: 2.5rem;
+
+        }
+
+        #logo:hover {
+            color: black;
+
+        }
+
+        a, a:link {
+
+            text-decoration: none;
+        }
+
+        #bold {
+            color: deeppink;
+        }
+
+        #foot {
+            margin-top: auto;
+            color: black;
+            font-family: 'Montserrat', cursive;
+            font-size: 1.2rem;
+            height: 100%;
+        }
+
+
+    </style>
+
+</head>
+<body>
+<div class="">
+
+    <nav class="navbar navbar-default" style="background: #fff; border-radius:0px;">
+        <div class="container">
+
+            <a class="center" href="/"><p id="logo"><strong> pinmyblogs.com</strong></p></a>
+        </div>
+    </nav>
+
+
+    <div style="margin-top:100px;">
+        <h1><p class="text-center"> pin <strong id="strong"> Blogs </strong> from your <b id="bold">&hearts; </b>
+            websites..
+        </p></h1>
+
+
+        <h3 style="color:red">
+            <p>
+                By pasting name of <b>weblink </b> after
+                <br>
+            <h4><code style="color:black; background: yellow;"> pinmyblogs.com/ </code>
+                <br>
+                <br>
+                <b>in address bar. </b>
+
+                <br>
+
+                <br>
+                or
+
+                <br>
+                <br>
+                <b style="color:indigo; background: powderblue">download the Chrome Extension</b>
+            </h4>
+
+
+            <br>
+            <img src="{% static 'images/example.png' %}" alt="example"/>
+            </p>
+        </h3>
+        <h2 style="margin-top:30px;"><p><a class="text-center" href="{% url 'login' %}" id="logo">Login</a>
+            <b> | </b>
+            <a class="text-center" id="logo"
+               href="{% url 'register' %}">
+                Register </a></p></h2>
+
+
+    </div>
+</div>
+
+
+{% include 'footer.html' %}
+
+
+{% load static %}
+<script src="{% static "jquery111.js" %}"></script>
+<script src="{% static "bootstrap.min.js" %}"></script>
+
+<style>
+
+</style>
+</body>
+</html>

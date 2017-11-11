@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+
+{% block title_name %}
+
+    {{ title }}
+
+
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">
+
+            {% block navbar %}
+
+                {% include 'navbar.html' %}
+            {% endblock %}
+            <div class="col-sm-9 col-md-10 col-lg-10">
+
+                <ul class="breadcrumb" style=" width: max-content; padding: 2px;">
+                    You are here :-
+                    <li class="active">Home</li>
+                </ul>
+
+                <div class="row" id="search">
+
+                    <div class=" col col-lg-12 col-sm-8 ">
+                        <form action="{% url 'search' %}">
+                            <input type="text" placeholder="Search ...  " title="keyword, category"
+                                   data-placement="auto"
+                                   name="search" id="searchtext"/>
+                            <button type="submit" id="submitsearch"><span class="glyphicon glyphicon-search"/></button>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div style="margin-top:10px;  ">
+                    <div class="row">
+
+                        <div class="  col col-lg-12   col-sm-8 " style="position: relative;">
+                            <form action="{% url "dashboard" %}" method="POST">
+                                {% csrf_token %}
+                                <input type="text" placeholder="http:// [ blogbost, wordpress etc...]"
+                                       name="q" data-placement="auto"
+                                       title="http://www.example.com/" id="url"/>
+
+                                <button type="submit" name="save" id="save" value="save"><span
+                                        class="glyphicon glyphicon-save"/></button>
+
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                {#                <form>#}
+                {##}
+                {#                    <div class="row">#}
+                {#                        <div class="form-group">#}
+                {##}
+                {#                            <div class=" col col-lg-12 col-sm-8 " id="multioptions">#}
+                {#                                <select class="form-control" id="url" name="moreoption" disabled>#}
+                {#                                    <option value="moreoptions" disabled selected>More Options</option>#}
+                {#                                    <option value="default" disabled>-------------------------</option>#}
+                {#                                    <option value="multidelete">Remove Selected</option>#}
+                {#                                    <option value="createcategory">Create New Category</option>#}
+                {#                                </select>#}
+                {##}
+                {#                            </div>#}
+                {#                        </div>#}
+                {#                    </div>#}
+                {#                </form>#}
+
+
+                <div style="margin-top:30px; ">
+
+
+                    <table class=" table  table-condensed " style="border: none;">
+                        {% if allUrl %}
+
+                            {% for u in allUrl %}
+                                <tr>
+                                    <td style="width: 100%;">
+
+
+                                        {% if "http" in u.url %}
+                                            <div class=" col col-md-8 col-sm-7">
+                                                <p>
+
+                                                <div class="col col-md-1 col-sm-1">
+
+                                                    <input class="" type="checkbox" name="select"
+                                                           id="{{ u.user_hash }}"/>
+
+                                                </div>
+                                                {# <img style="margin-right: 12px;"#}
+                                                {#  id="favicon"#}
+                                                {# src="https://www.google.com/s2/favicons?domain={{ u.domain_name }}">#}
+
+
+                                                <a href="{{ u.url }}" style="font-size: 16px;" target="_blank">
+
+                                                    {% if u.title != "Not-Defined" %}
+                                                        {{ u.title }}
+
+                                                    {% else %}
+                                                        {{ u.url|truncatechars:"50" }}
+
+                                                    {% endif %}
+
+                                                </a>
+                                                </p>
+                                            </div>
+
+
+                                        {% else %}
+
+
+
+                                            <div class=" col col-md-8 col-sm-3">
+
+
+                                                <p>
+                                                <div class="col col-md-1 col-sm-1">
+                                                    <input class="" type="checkbox" name="select"
+                                                           id="{{ u.user_hash }}"/>
+                                                </div>
+                                                {# <img style="margin-right: 12px;" id="favicon"#}
+                                                {# src="https://www.google.com/s2/favicons?domain={{ u.domain_name }}">#}
+
+                                                <a href="http://{{ u.url }}" target="_blank">
+
+
+                                                    {% if u.title != "Not-Defined" %}
+                                                        {{ u.title }}
+
+                                                    {% else %}
+                                                        {{ u.url|truncatechars:"60" }}
+
+                                                    {% endif %}
+
+                                                </a></p>
+                                            </div>
+
+
+
+                                        {% endif %}
+
+
+
+                                        <div class="col col-md-3 col-sm-3" style="word-wrap: normal;">
+                                            <h6>
+                                                <a href=" {{ request.user.get_host }}   {% url "edit" u.user_hash %}"
+                                                   target="_blank">
+                                                    <span class="glyphicon glyphicon-pencil"
+                                                          style=" font-size: 1.2em; color:black"> </span></a> |
+
+                                                <a href=" {{ request.user.get_host }} {% url "delete" u.user_hash %}"
+                                                   class="text-center"><span class="glyphicon glyphicon-trash"
+                                                                             style=" font-size: 1.2em; color:black"></span>
+                                                </a>
+
+
+                                            </h6>
+
+                                        </div>
+                                        <div class="col col-md-1 col-sm-1">
+                                            <h6>
+
+                                                {% if request.session.format == "fixed" %}
+                                                    {{ u.date_modified|date }}
+                                                {% else %}
+                                                    {{ u.date_modified|timesince }}
+                                                {% endif %}
+
+                                            </h6>
+
+
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+
+                            </tbody>
+
+
+                            </table>
+
+
+
+                            <nav class="text-center col-lg-pull-0">
+                                <ul class="pagination ">
+
+
+                                    {% if allUrl.has_previous %}
+                                        <li class="page-item  " style="float: left">
+                                            <a class="page-link" a href="?page={{ allUrl.previous_page_number }}">
+
+                                                <span class="sr">Previous</span>
+                                            </a>
+                                        </li>
+
+
+                                    {% endif %}
+                                    <li class="page-item active" style="float: left">
+                                         <span class="sr">  {{ allUrl.number }}
+                                        of {{ allUrl.paginator.num_pages }}</span>
+
+                                    </li>
+                                    {% if allUrl.has_next %}
+                                        <li class="page-item " style="float: left">
+                                            <a href="?page={{ allUrl.next_page_number }}" class="page-link"> <span
+                                                    class="sr">Next</span></a>
+
+                                        </li>
+
+                                    {% endif %}
+
+
+                                </ul>
+
+
+                            </nav>
+                        {% else %}
+
+                            <div class="  alert alert-success text-center" style="color: black;">No Items ...</div>
+                        {% endif %}
+
+                </div>
+
+
+                <!-- Modal -->
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="  modal-dialog modal-sm">
+                        <div class="modal-content" style="background:#fff;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title text-left">Are you sure want to Logout?</h4>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-info danger" data-dismiss="modal">Logout</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,185 @@
+<script>
+
+
+    /***************** FOR THE  MULTIPLE SELECT OPTIONS**********************/
+
+    $(document).ready(function () {
+        $('#getCheckboxesButton').live('click', function (event) {
+            var checkboxValues = [];
+
+            $('input[type="checkbox"]:checked').each(function (index, elem) {
+                checkboxValues.push($(elem).val());
+                alert(checkboxValues);
+            });
+            $('#debugOutput').html(checkboxValues.join(','));
+        });
+    });
+
+    /*****************************************************************************/
+    $(document).ready(function () {
+        $('#searchtext').tooltip();
+        $('#url').tooltip();
+        $(".removecategory > h3>.label>.glyphicon ").css({
+            "cursor": "select",
+        });
+        $(".removecategory > h3>.label ").on("mouseover", function () {
+
+            $(this).css({
+
+                "cursor": "pointer",
+            });
+        });
+
+
+        $("select[name=linksperpage]").on("change", function () {
+
+
+            var r = confirm("Changing link /page " + $(this).val());
+            if (r == true) {
+                page = $(this);
+                r = page.val();
+                $.ajax({
+                    url: "/setting/pagination/" + r + "/",
+                    type: "GET",
+                    success: function () {
+                        page.prop("disabled", true);
+                        $("#status").slideDown().slideToggle(2000);
+
+                    }
+                });
+            }
+        });
+    });
+
+
+    $(document).ready(function () {
+        $("input[name=downloadformat]").on("click", function () {
+            {#            $("#status").fadeIn().hide(1000);#}
+            alert("Generating " + $(this).val() + " may take a minute ....");
+            download = $(this).val();
+            window.open(url = "/setting/download/" + btoa(download).trim() + "/", "nymane");
+            console.log(navigator.product);
+            $.ajax({
+                url: "/setting/download/" + btoa(download).trim() + "/",
+                type: "GET",
+                success: function () {
+                    $("input[name=downloadformat]").prop("disabled", true);
+                    $("#status").slideDown().slideToggle(2000);
+                }
+            });
+        });
+
+    });
+
+
+    $(document).ready(function () {
+        $("input[name=dateformat]").on("click", function () {
+            alert("Changing Date/Time to " + $(this).val().toUpperCase() + " format.");
+            format = $(this).val();
+            $.ajax({
+                url: "/setting/format/" + btoa(format).trim() + "/",
+                type: "GET",
+                success: function () {
+                    $("input[name=dateformat]").prop("disabled", true);
+                    $("#status").slideDown().slideToggle(2000);
+                }
+            });
+        });
+
+
+        $(".removecategory > h3 >.label ").on("click", function () {
+            var text = $(this);
+            var r = confirm("Do you want to remove ? [" + text.text().trim() + "]");
+            if (r == true) {
+
+                $.ajax({
+                    url: "/setting/category/remove/" + btoa(text.text()).trim() + "/",
+                    type: "GET",
+                    success: function () {
+                        $("#status").slideDown().slideToggle(2000);
+                        text.fadeOut();
+
+                    }
+                });
+
+
+            }
+
+        });
+    });
+
+    $(document).ready(function (e) {
+        var m = $("#message");
+        var message = $(".message");
+        $("#selectthecategory").on("change", function (e) {
+            var iist = $(this).val();
+            m.hide();
+            var form = $(this).closest("form")
+            var token_value = $("input[name='csrfmiddlewaretoken']");
+
+            $.ajax({
+                url: "{% url 'categoryshowlist' %}",
+                data: {
+                    select_category: iist,
+                    csrfmiddlewaretoken: token_value.val(),
+                },
+                type: "POST",
+                success: function (data) {
+                    message.show();
+                    if ("message" in data) {
+                        message.html("");
+                        var array = data['message'];
+                        array = array.toString().split(',');
+                        array.forEach(function (w) {
+
+                            message.append("<p><li><a href='>" + w + "'</a>" + w + "</li></p><hr>");
+
+                        });
+
+                    } else {
+
+                        message.html("<p><li>No Result</li></p><hr>");
+                    }
+
+                }
+            });
+
+
+        });
+    });
+
+    $(function () {
+        $("#changeapassword").on("submit", function () {
+
+
+            var current_password = $("#currentpassword").val();
+            var password1 = $("#newpassword").val();
+            var password2 = $("#newpasswordagain").val();
+
+            if (current_password.length >= 6 && password1.length >= 6 && password2.length >= 6) {
+
+                alert("here");
+                if (current_password === password1 || current_password === password2) {
+                    $("#info").text("New and old password cannot be same");
+                    {#                        alert("here1");#}
+                    return false;
+                } else if (password1 != password2) {
+                    $("#info").text("Password Not Matched");
+                    {#                        alert("here2");#}
+                    return false;
+                } else if (password1 === password2) {
+                    alert("After changing password  please login again to continue...");
+                    return true;
+                }
+
+            }
+            else {
+                $("#info").text("Length > 6 ");
+                return false;
+            }
+            return false;
+        });
+    });
+
+</script>
+

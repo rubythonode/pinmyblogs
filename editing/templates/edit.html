@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% block title_name %}
+    {{ title }}
+{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            {% block navbar %}
+                {% include "navbar.html" %}
+            {% endblock %}
+            <div class="col-sm-9 col-md-10 col-lg-10" style="margin-top: 10px;">
+                <div class="col-sm-6 col-md-6 col-lg-6">
+                    <ul class="breadcrumb" style=" width: max-content; padding: 2px; background:white">
+                        You are here :-
+                        <li><a href="{% url "dashboard" %}">Home</a></li>
+                        <li class="active" style="color:black">Edit</li>
+                    </ul>
+
+                    {% if  messagetype %}
+                        <div class="alert alert-success bg-success text-center">
+                            Saved Successfully <a href="{% url 'dashboard' %}"
+                                                  style="color:black; background: whitesmoke"> Go Back to Home</a>
+                            {% else %}
+                            {% if  message != None %}
+
+                                <h2> Edit ...</h2>
+                                <hr class="hr">
+
+                                {% if edit != None %}
+
+
+
+
+                                    <form action="" method="POST">
+                                        <div class="form-group">
+
+                                            {% csrf_token %}
+                                            <label for="title"><h3>Title</h3></label>
+                                            <input type="text" class="form-control" id="title" placeholder="Title"
+                                                   name="title"
+                                                   value="{{ edit.title }}">
+                                        </div>
+                                        <input type="hidden" name="hash"
+                                               value="{{ edit.user_hash }}">
+
+
+                                        <div class="form-group">
+                                            <label for="url"><h3>Url</h3></label>
+                                            <input type="text" class="form-control" id="url" placeholder="Url"
+                                                   name="url"
+                                                   value="{{ edit.url }}">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="summary"><h3>Summary</h3></label>
+                                            <textarea type="text" class="form-control" id="summary"
+                                                      placeholder="Add summary here (Optional)"
+                                                      name="summary" rows="5" cols="5"
+                                                      style="resize: vertical">{{ edit.summaryp }}</textarea>
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" name="archive"
+                                                              {% if edit.is_arhived is 1 %}checked
+                                                              {% endif %}
+
+                                                > Archive</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+
+                                            <label for="category"><h3>Category ...</h3>Current
+                                                :- {{ edit.category_name|upper }} </label>
+                                            <select class="form-control" id="category" name="c_name">
+                                                <option disabled readonly="true" selected>Select or Move category
+
+                                                </option>
+
+                                                {% if categorylist != None %}
+                                                    {% for c in categorylist %}
+
+
+
+                                                        <option value="{{ c.category_name|title }}">{{ c.category_name|title }}</option>
+                                                    {% endfor %}
+                                                {% else %}
+
+                                                    <option value="not_defined" disabled selected>Not_defined
+                                                    </option>
+
+                                                {% endif %}
+
+
+                                            </select>
+
+                                        </div>
+
+
+                                        <div class="form-group">
+
+                                            <button type="submit" class="btn btn-danger" id="save">Save</button>
+                                        </div>
+
+                                    </form>
+
+                                {% else %}
+
+                                    <div class="text-center">
+
+                                        <h2>Not Exists! </h2>
+
+
+                                    </div>
+
+                                {% endif %}
+                                </div>
+                            {% else %}
+
+
+                                <div class="alert alert-warning bg-warning text-center">
+                                    An Error Occured <a href="{% url 'dashboard' %}"
+                                                        style="color:black; background: whitesmoke"> Go Back to Home</a>
+                                </div>
+
+
+                            {% endif %}
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <style>
+        #save, #save:hover, #save > button:active {
+
+            width: 100px;
+            border-radius: 0px;
+            hight: 50px;
+
+            font-size: 1.5em;
+
+        }
+
+        .checkbox {
+
+            margin: 10px;
+        }
+
+    </style>
+
+
+{% endblock %}

@@ -1,0 +1,173 @@
+<html>
+
+<head>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+
+    {#    <link rel="icon" href="" type="image/x-icon"/>#}
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+
+    {% load static %}
+
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" type="text/css"/>
+    {% load static %}
+    <link href="{% static "navbar-fixed-side.css" %}" rel="stylesheet" type="text/css"/>
+
+    <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Kaushan+Script'/>
+
+
+    <title>
+        {% block title_name %}
+            {{ title }}
+
+        {% endblock %}
+
+
+    </title>
+
+
+</head>
+<body>
+{% block body %}
+
+    {% block navbar %}
+
+
+    {% endblock %}
+
+
+
+
+
+{% endblock %}
+
+
+<style>
+
+    #logo {
+
+        color: green;
+        font-family: 'Kaushan Script', cursive;
+        /*font-size:2.5rem;*/
+    }
+
+    #logo:hover {
+        color: black;
+    }
+
+    .hr_line {
+
+        height: 5px;
+        border-top: 0;
+        background: #c4e17f;
+        border-radius: 5px;
+        background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+        background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+        background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+        background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+
+    }
+
+    .errorlist {
+        list-style: none;
+        list-style-position: outside;
+        margin-bottom: 3px;
+        padding: 0px;
+
+    }
+
+    #logo {
+
+        color: green;
+        font-family: 'Kaushan Script', cursive;
+        font-size: 2.5rem;
+    }
+
+    #logo:hover {
+        color: black;
+    }
+
+    #search {
+
+        margin-top: 10px;
+        background: #fff;
+    }
+
+    #searchtext, #searchtext :focus, #url, #url:hover, #url:focus {
+
+        padding: 5px;
+        border-bottom: 1px solid #333;
+        border-left: 0px solid #333;
+        border-right: 0px solid #333;
+        border-top: 0px solid #333;
+        border-radius: 0px;
+        height: 30px;
+
+        font-size: 1.2em;
+        box-shadow: none;
+        color: black;
+        width: 60%;
+
+    }
+
+    #submitsearch {
+        padding: 5px;
+        background: #00bcd4;
+        border: 0px solid #607d8b;
+        color: white;
+        height: 30px;
+        width: 75px;
+    }
+
+    title {
+
+        color: yellow;
+        background: blue;
+
+    }
+
+    #foot {
+
+        color: black;
+        font-family: 'Montserrat', cursive;
+        font-size: 1.2rem;
+
+    }
+
+    #save {
+        padding: 0px;
+        background: #00bcd4;
+        border: 0px solid #607d8b;
+        color: white;
+        height: 30px;
+        width: 75px;
+        font-size: medium;
+    }
+
+    #save:hover, #submitsearch:active {
+        background: black;
+    }
+
+    a:hover {
+
+        text-decoration: none;
+        color: black;
+        text-decoration-style: solid;
+        cursor: pointer;
+    }
+
+
+</style>
+
+{% load static %}
+<script src="{% static "jquery111.js" %}"></script>
+<script src="{% static "bootstrap.min.js" %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
+{% include 'js_file.html' %}
+</body>
+</html>

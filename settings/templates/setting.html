@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+
+
+{% block title_name %}
+
+    {{ title }}
+{% endblock %}
+{% block body %}
+    {% block navbar %}
+
+        {% include "navbar.html" %}
+
+    {% endblock %}
+
+
+    <div class="col-sm-9 col-md-10 col-lg-10" style="margin-top: 10px;">
+
+
+        <div class="col-sm-12 col-md-12 col-lg-12 ">
+
+            <ul class="breadcrumb" style=" width: max-content; padding: 2px; background:white">
+                You are here :-
+                <li><a href="{% url "dashboard" %}">Home</a></li>
+
+                <li class="active" style="color:black">Settings</li>
+            </ul>
+
+
+        </div>
+        <br>
+
+
+        <div class="col-sm-6 col-md-6 col-lg-7 col-lg-offset-1 ">
+
+            <div id="status" class=" alert alert-info  text-center  ">
+                <p>Saved Changes </p>
+
+
+            </div>
+            {% if changed == True %}
+                <div class="text-center">
+                    Password Changed
+                    successfully
+
+                </div>
+
+            {% elif changed is not True %}
+                <div class="text-center">
+                    Invalid Password
+
+                </div>
+
+
+            {% endif %}
+
+            <ul id="myTab" class="nav nav-tabs   ">
+
+                <li class="active"><a href="#personalize" data-toggle="tab">Personalize</a></li>
+                <li class="">
+                    <a href="#home" data-toggle="tab">Account</a></li>
+
+
+            </ul>
+
+
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane" id="home" style="padding:10px;">
+
+
+                    <label>Change Password</label>
+                    <hr>
+
+
+                    <form method="POST" action="{% url 'setting_home' %}" accept-charset="UTF-8"
+                          role="form" class="  form " id="changeapassword">
+                        {% csrf_token %}
+
+
+                        <input class="form-control " placeholder="Old Password" autocomplete="false"
+                               name="oldpassword"
+                               type="password" style="border-radius: 0px;" required id="currentpassword">
+
+
+                        <div style=" margin-top: 10px;">
+                        </div>
+
+                        <input class="form-control middle" placeholder="New Password" autocomplete="false" required
+                               name="newpassword"
+                               type="password"
+                               style="border-radius: 0px;" id="newpassword">
+
+
+                        <div style="margin-top: 10px;">
+                        </div>
+
+                        <input class="form-control" placeholder="Again New Password" required
+                               name="newpasswordagain"
+                               type="password" style="border-radius: 0px;" id="newpasswordagain">
+
+                        <p style="  font-size: 10px;  margin-top: 5px;"><b> Use at least 1
+                            letter, 1 digit and 6 characters.</b></p>
+                        <div style="margin-top: 10px;" id="info">
+                        </div>
+                        <input class="btn btn-lg btn-info"
+                               style="border-radius: 0px;" name="changepassword"
+                               type="submit" value="CHANGE">
+
+                    </form>
+                    <hr>
+
+                    <div style="margin: 10px;">
+
+                        <a href=""> Delete My Account </a>
+
+
+                    </div>
+                    <hr>
+
+
+                </div>
+                <div class="tab-pane active " id="personalize">
+
+
+                    <div class="col col-lg-12">
+
+                        <label> Remove Category </label>
+
+
+                        {% if q.count > 0 %}
+
+                            <div class="removecategory">
+
+                                {% for c in q %}
+
+
+                                    <h3><span
+                                            class="label label-success"> {{ c.category_name|title }} <span
+                                            class="glyphicon glyphicon-remove"> </span>     </span>
+
+                                    </h3>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p> No category found </p>
+                        {% endif %}
+
+                        <hr>
+                        <label> Number of Links/Page </label>
+
+
+                        <select name="linksperpage" class="">
+                            <option value="10" selected>10</option>
+                            <option value="20">20</option>
+                            <option value="40">40</option>
+                            <option value="60">60</option>
+
+                        </select>
+
+                        <hr>
+
+
+                        <label for="name pull-left">Export </label>
+
+                        <div id="downloadlist">
+                            <label class="checkbox">
+                                <input type="radio" name="downloadformat" id="html"
+                                       value="html" checked> .html
+                            </label>
+                            <label class="checkbox ">
+                                <input type="radio" name="downloadformat" id="csv"
+                                       value="csv"> .CSV
+                            </label> <label class="checkbox">
+                            <input type="radio" name="downloadformat" id="pdf"
+                                   value="pdf"> .pdf
+                        </label>
+
+                        </div>
+                        <hr>
+
+
+                        <label for="name pull-left">Date/Time Format </label>
+
+                        <div id="datatimeformat">
+                            <label class="checkbox">
+                                <input type="radio" name="dateformat" id="relative"
+                                       value="relative" checked> Relative (1w,3d , a few hr ago)
+                            </label>
+                            <label class="checkbox ">
+                                <input type="radio" name="dateformat" id="fixed"
+                                       value="fixed"> Fixed (DD/MM/YYYY)
+                            </label>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <style>
+            .tab-pane {
+                padding-top: 15px;
+            }
+
+            #status {
+                display: none;
+            }
+
+        </style>
+
+    </div>
+{% endblock %}
+
+

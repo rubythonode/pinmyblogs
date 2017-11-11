@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% block title_name %}
+    {{ title }}
+{% endblock %}
+{% block body %}
+
+
+
+    {##}
+    {#    <input type="checkbox" value="Red">Red</input>#}
+    {#    <input type="checkbox" value="Green">Green</input>#}
+    {#    <input type="checkbox" value="Blue">Blue</input>#}
+    {#    <input type="button" value="Get checkboxes" id="getCheckboxesButton">#}
+    {##}
+    {#    </input>#}
+    {#    <div id="debugOutput">#}
+    {#    </div>#}
+
+    <div class="container-fluid">
+        <div class="row">
+
+
+            {% block navbar %}
+
+                {% include "navbar.html" %}
+            {% endblock %}
+            <div class="col-sm-9 col-md-10 col-lg-10" style="margin-top: 10px;">
+
+
+                <div class="col-sm-6 col-md-6 col-lg-12">
+                    <ul class="breadcrumb" style=" width: max-content; padding: 2px; background:white">
+                        You are here :-
+                        <li><a href="{% url "dashboard" %}">Home</a></li>
+
+                        <li class="active" style="color:black">Category</li>
+
+                    </ul>
+
+                    <div style=" margin: 10px;">
+                    </div>
+
+
+                    <div class="col-sm-6 col-md-3 col-lg-3">
+                        <button class="form form-control btn btn-primary" name="addcategory" input="submit"
+                                data-toggle="modal" data-target="#myModal"> &plus;
+                            Category
+                        </button>
+
+                    </div>
+                    <div style=" margin: 10px;">
+                    </div>
+
+
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog model-sm">
+                            <div class="modal-content" style="background:#fff;">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title text-left">Add New Category </h4>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <form method="POST" action="{% url 'categoryshow' %}" accept-charset="UTF-8"
+                                          role="form" class="form">
+
+                                        {% csrf_token %}
+
+                                        <div class="input-group">
+                                            <input class="form-control" placeholder="Name" required
+                                                   name="createnew"
+                                                   type="text"
+                                                   style="border-radius: 0px;">
+
+                                        </div>
+
+                                        <div style=" margin: 10px;">
+                                        </div>
+
+                                        <input class="btn btn-sm btn-primary"
+                                               style=" border-radius: 0px;" name="create"
+                                               type="submit" value="Create">
+
+
+                                    </form>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    {% if q %}
+
+                        <form method="post" action="{% url "categoryshowlist" %}" onsubmit="javascript:return false;">
+                            <div class="col-sm-6 col-md-6 col-lg-6 center">
+                                {% csrf_token %}
+                                <select name="select_category" class="form-control" id="selectthecategory">
+                                    <option value="Select category" disabled selected>Select the category ...</option>
+                                    {% for c in q %}
+
+                                        <option value="{{ c.category_name }}">{{ c.category_name | title }} </option>
+
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+
+                            <div style=" margin: 10px;">
+                            </div>
+
+                            <div class="col-sm-4 col-md-4 col-lg-2  ">
+
+                                <button type="submit" class="form-control  btn btn-success" name="category_button"
+                                        id="category_button"> Go
+                                </button>
+                            </div>
+                        </form>
+                    {% endif %}
+
+
+                </div>
+
+
+                <br><br>
+                <hr class="hr">
+
+                <div class="jumbotron clear-fix" style="margin-top: 100px;" id="message">
+
+                    <h2 class="text-center"> Please select the category </h2>
+                </div>
+                <br>
+                <br>
+
+                <div class="col col-md-7 col-sm-7 col-lg-6 message">
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <style>
+            #save, #save:hover, #save > button:active {
+
+                width: 100px;
+                border-radius: 0px;
+                hight: 50px;
+
+                font-size: 1.5em;
+
+            }
+
+            .checkbox {
+
+                margin: 10px;
+            }
+
+        </style>
+
+    </div>
+
+
+
+
+{% endblock %}
