@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title_name %}
+
+    {{ title }}
+
+
+{% endblock %}
+
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                <div class="container-fluid">
+                    <div class="row" style="margin-top:130px; margin-left: 10px;">
+                        <div class="col-md-3 col-md-offset-4">
+
+                            <form method="POST" action="{% url 'login' %}" accept-charset="UTF-8" role="form"
+                                  id="loginform" class="form-signin">
+                                {% csrf_token %}
+                                <h2 style="text-align:center"><a href="{% url 'index' %}"><p class="text-center"
+                                                                                             id="logo"><strong>
+                                    pinmyblogs.com</strong></p></a></h2>
+
+                                <hr class="hr_line">
+                                {% if error %}
+
+
+                                    <div class="alert alert-danger alert-dismissable fade in">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        {{ error }}
+
+                                    </div>
+                                {% endif %}
+
+
+
+
+                                <h3 class="text-center"> Login</h3>
+
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"
+                                                                         style="color:#000"></span></div>
+                                    <input class="form-control" placeholder="E-mail" name="email" type="text"
+                                           style="border-radius: 1px;  ">
+                                </div>
+
+                                <div style="margin-top: 10px;">
+                                </div>
+
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-asterisk"
+                                                                         style="color:#000">  </span></div>
+                                    <input class="form-control" placeholder="Password" name="password" type="password"
+                                           value="" style="border-radius: 1px;  ">
+
+                                </div>
+                                <a class="pull-right" href="#" style="color:black;">Forgot
+                                    password?</a>
+
+                                <div class="checkbox" style="width:140px;">
+                                    <label style="color:black;"> <input name="remember" type="checkbox"
+                                                                        value="Remember Me">
+                                        Remember Me</label>
+                                </div>
+                                <input class="btn btn-lg btn-info btn-block"
+                                       style="border-radius: 1px; background: #1cb0d1; color: black; " type="submit"
+                                       value="LOGIN">
+                                <p class="text-center" style="margin-top:10px;"><strong class="strong">OR</strong></p>
+                                <p class="text-center"><a href="{% url 'register' %}" style=" color:black;"
+                                                          class="btn btn-link"><b>Register for an account? </b></a></p>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+    {#    <form action="{% url 'register' %}" method='POST'>#}
+    {#        {% csrf_token %}#}
+    {#        {{ form.as_table }}#}
+    {##}
+    {#        <button type="submit" name="submit"> Submit</button>#}
+
+    {% include 'footer.html' %}
+{% endblock %}
