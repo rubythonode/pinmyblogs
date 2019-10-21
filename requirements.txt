@@ -6,7 +6,7 @@ dj-static==0.0.6
 django==1.10
 django-debug-toolbar==1.8
 django-filter==1.0.4
-djangorestframework==3.6.3
+djangorestframework==3.9.1
 gunicorn==19.7.1
 idna==2.5
 Markdown==2.6.8
